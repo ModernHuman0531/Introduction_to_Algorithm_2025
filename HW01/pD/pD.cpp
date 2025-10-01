@@ -16,14 +16,16 @@ long long countkthnum(int mid){
     for(;l<n;++l){
         int sum=(score[l]+score[r]);
         while(sum>=mid&&r>l){
+            // When l=r, we stop pushing r to left.
             sum-=score[r];
             r-=1;
             sum+=score[r];
         }
+        // Before l=r, r_start-r is the qualified number that sum>=mid
+        // After l exceed r, from that l every elemnt at the right hand are qualified sum>=mid
+        // So use max(l,r) 
         count+=(r_start-max(l,r));
     }
-
-    //cout<<"mid="<<mid<<",count="<<count<<"\n";
     return count;
 }
 int binary_search(long long k){
@@ -38,7 +40,6 @@ int binary_search(long long k){
         }
         else
             r=mid;
-        //cout<<"l="<<l<<",r="<<r<<"\n";
     }
     return l;
 }
