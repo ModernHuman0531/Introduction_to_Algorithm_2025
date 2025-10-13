@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define map_size 8 
-int max_num = -1e9;
+int max_num = INT_MIN;
 int weights[map_size][map_size];
 vector<int> state;
 bool check(int row,int col){
@@ -35,7 +35,7 @@ void solve(int row,int current_state){
 int main(){
     ios::sync_with_stdio(false),cin.tie(nullptr);
     // Input
-    //cout<<"Reading input..."<<"\n";
+    cout<<"Reading input..."<<"\n";
     for(int i=0;i<map_size;++i){
         for(int j=0;j<map_size;++j){
             int num;
@@ -43,8 +43,8 @@ int main(){
             weights[i][j]=num;
         }
     }
-    // cout<<"Solving..."<<"\n";
+    cout<<"Solving..."<<"\n";
     solve(0,0);
-    //cout<<"Done!"<<"\n";
+    cout<<"Done!"<<"\n";
     cout<<max_num<<"\n";
 }

@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 int n;
 vector<long long> vec;
 vector<long long> prefix_sum;
