@@ -61,7 +61,7 @@ int main(){
     while(j<N){
         int k=j;
         // Find the range where x is equal in [j,k)
-        while(k<N && vec[j].x==vec[k].x){
+        while(vec[j].x==vec[k].x){
             ++k;
         }
         // Handle range j to k-1 first
