@@ -13,7 +13,7 @@ class Vertex{
 };
 
 vector<Vertex> adj;
-long long BFS(int start_vertex){
+/*long long BFS(int start_vertex){
     long long total_award=0;
     queue<int> q;
     total_award+=adj[start_vertex].a_i;
@@ -36,6 +36,7 @@ long long BFS(int start_vertex){
     }
     return total_award;
 }
+
 void solve(){
     long long max_award=0;
     for(int i=1;i<=N;++i){
@@ -43,6 +44,14 @@ void solve(){
     }
     cout<<max_award<<"\n";
     return;
+}
+*/
+void solve(){
+    long long total_award=0;
+    for(auto v:adj){
+        total_award+=v.a_i;
+    }
+    cout<<total_award<<"\n";
 }
 
 void addEdge(int vi,int ui){
