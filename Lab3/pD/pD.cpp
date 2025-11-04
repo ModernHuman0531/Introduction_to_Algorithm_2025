@@ -46,15 +46,17 @@ int main(){
         if(!adj[v].visited)
             DFS(v);
     }
-    // Apply subtask3 dp formula
+    // Apply subtask4 dp formula
     long long ans=0;
     for(int v:topoOrder){
         dp[v]=adj[v].ai;
+        long long max_successor=0;
         for(int u:adj[v].li){
             // Only one elment in this list, because the whole graph 
             // are all linked-list
-            dp[v]=dp[v]+dp[u];
+            max_successor=max(max_successor,dp[u]);
         }
+        dp[v]=dp[v]+max_successor;
         ans=max(ans,dp[v]);
     }
     cout<<ans<<"\n";
