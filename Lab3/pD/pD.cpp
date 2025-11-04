@@ -1,81 +1,62 @@
 #include<bits/stdc++.h>
 using namespace std;
 int N,M;
-
-class Vertex{
+class Edge{
     public:
-        int a_i;
+        int ai;
         list<int> li;
-        bool is_visited;
-        Vertex(){
-            is_visited=false;
+        bool visited;
+        Edge(){
+            visited=false;
         }
+
 };
 
-vector<Vertex> adj;
-/*long long BFS(int start_vertex){
-    long long total_award=0;
-    queue<int> q;
-    total_award+=adj[start_vertex].a_i;
-    adj[start_vertex].is_visited=true;
-    q.push(start_vertex);
-    while(!q.empty()){
-        int v=q.front();
-        q.pop();
-        for(auto u:adj[v].li){
-            if(!adj[u].is_visited){
-                adj[u].is_visited=true;
-                total_award+=adj[u].a_i;
-                q.push(u);
-            }
-        }
-    }
-    // Clean the visited
-    for(auto &v:adj){
-        v.is_visited=false;
-    }
-    return total_award;
+vector<Edge> adj;
+void addEdge(int v,int u){
+    adj[v].li.push_back(u);
 }
-
-void solve(){
-    long long max_award=0;
-    for(int i=1;i<=N;++i){
-        max_award=max(max_award,BFS(i));
+vector<int> topoOrder;
+const int MAXN=200005;
+long long dp[MAXN];
+void DFS(int v){
+    adj[v].visited=true;
+    for(int u:adj[v].li){
+        if(!adj[u].visited)
+            DFS(u);
     }
-    cout<<max_award<<"\n";
-    return;
-}
-*/
-void solve(){
-    long long total_award=0;
-    for(auto v:adj){
-        total_award+=v.a_i;
-    }
-    cout<<total_award<<"\n";
-}
-
-void addEdge(int vi,int ui){
-    adj[vi].li.push_back(ui);
+    topoOrder.push_back(v);
 }
 int main(){
     ios::sync_with_stdio(false),cin.tie(nullptr);
     cin>>N>>M;
     adj.resize(N+1);
-    // Handle vertex award input
     for(int i=1;i<=N;++i){
-        int ai;
-        cin>>ai;
-        adj[i].a_i=ai;
+        int a_i;
+        cin>>a_i;
+        adj[i].ai=a_i;
     }
-
-    // Handle directed edwge
     for(int i=0;i<M;++i){
-        int u,v;
-        cin>>u>>v;
-        addEdge(u,v);
+        int v,u;
+        cin>>v>>u;
+        addEdge(v,u);
     }
-    solve();
+    // first find reverse topological order
+    for(int v=1;v<=N;++v){
+        if(!adj[v].visited)
+            DFS(v);
+    }
+    // Apply subtask3 dp formula
+    long long ans=0;
+    for(int v:topoOrder){
+        dp[v]=adj[v].ai;
+        for(int u:adj[v].li){
+            // Only one elment in this list, because the whole graph 
+            // are all linked-list
+            dp[v]=dp[v]+dp[u];
+        }
+        ans=max(ans,dp[v]);
+    }
+    cout<<ans<<"\n";
     return 0;
-
-
 }
