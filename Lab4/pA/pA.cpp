@@ -21,8 +21,19 @@ int main(){
     }
     int now=1;
     for(int i=1;i<=n;++i){
-        for(int j=w;j>=ai[i];--j){
-            dp[j]=max(dp[j],dp[j-ai[i]]+bi[i]);
+        // ci[i]=0 means complete bag core code
+        if(ci[i]==0){
+            for(int j=ai[i];j<=w;++j){
+                dp[j]=max(dp[j],dp[j-ai[i]]+bi[i]);
+            }
+        }
+        // 0/1 bag and multiple bag can handle together
+        else{
+            for(int j=w;j>=ai[i];--j){
+                for(int k=1;k<=ci[i]&&k*ai[i]<=j;++k){
+                    dp[j]=max(dp[j],dp[j-k*ai[i]]+k*bi[i]);
+                }
+            }
         }
     }
     // Choose the maximum value consider the first n element
